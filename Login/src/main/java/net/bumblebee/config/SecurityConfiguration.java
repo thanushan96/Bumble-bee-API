@@ -55,7 +55,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .and()
                 .csrf()
-                .ignoringAntMatchers("/customers/**", "/products/**", "/api/registration/**", "/login/**") // ignore CSRF protection for /customers/** and /api/registration/**
                 .and()
                 .httpBasic(); // enable basic authentication
     }
