@@ -1,0 +1,178 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > ProductController</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">net.bumblebee.controller</a>
+</div>
+
+<h1>Coverage Summary for Class: ProductController (net.bumblebee.controller)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">ProductController</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (6/6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (24/24)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package net.bumblebee.controller;
+&nbsp;
+&nbsp;import net.bumblebee.entity.Product;
+&nbsp;import net.bumblebee.service.ProductService;
+&nbsp;import org.springframework.http.HttpStatus;
+&nbsp;import org.springframework.http.ResponseEntity;
+&nbsp;import org.springframework.stereotype.Controller;
+&nbsp;import org.springframework.ui.Model;
+&nbsp;import org.springframework.web.bind.annotation.*;
+&nbsp;
+&nbsp;import java.util.List;
+&nbsp;
+&nbsp;
+&nbsp;@RestController
+&nbsp;@CrossOrigin(&quot;http://localhost:3000&quot;)
+&nbsp;public class ProductController {
+&nbsp;
+&nbsp;    private ProductService productService;
+&nbsp;
+&nbsp;    public ProductController(ProductService productService) {
+<b class="fc">&nbsp;        super();</b>
+<b class="fc">&nbsp;        this.productService = productService;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @GetMapping(&quot;/products&quot;)
+&nbsp;    public ResponseEntity&lt;List&lt;Product&gt;&gt; listProducts() {
+<b class="fc">&nbsp;        List&lt;Product&gt; products = productService.getAllProducts();</b>
+<b class="fc">&nbsp;        return new ResponseEntity&lt;&gt;(products, HttpStatus.OK);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @PostMapping(&quot;/products/new&quot;)
+&nbsp;    public ResponseEntity&lt;Product&gt; createProduct(@RequestBody Product product) {
+<b class="fc">&nbsp;        productService.saveProduct(product);</b>
+<b class="fc">&nbsp;        return new ResponseEntity&lt;&gt;(product, HttpStatus.CREATED);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @GetMapping(&quot;/products/{id}&quot;)
+&nbsp;    public ResponseEntity&lt;Product&gt; getProductById(@PathVariable Long id) {
+<b class="fc">&nbsp;        Product product = productService.getProductById(id);</b>
+<b class="fc">&nbsp;        if (product != null) {</b>
+<b class="fc">&nbsp;            return new ResponseEntity&lt;&gt;(product, HttpStatus.OK);</b>
+&nbsp;        } else {
+<b class="fc">&nbsp;            return new ResponseEntity&lt;&gt;(HttpStatus.NOT_FOUND);</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    @PutMapping(&quot;/products/{id}&quot;)
+&nbsp;    public ResponseEntity&lt;Product&gt; updateProduct(@PathVariable Long id,
+&nbsp;                                                 @RequestBody Product product) {
+<b class="fc">&nbsp;        Product existingProduct = productService.getProductById(id);</b>
+<b class="fc">&nbsp;        if (existingProduct != null) {</b>
+<b class="fc">&nbsp;            existingProduct.setName(product.getName());</b>
+<b class="fc">&nbsp;            existingProduct.setDescription(product.getDescription());</b>
+<b class="fc">&nbsp;            existingProduct.setCategory(product.getCategory());</b>
+<b class="fc">&nbsp;            existingProduct.setPrice(product.getPrice());</b>
+<b class="fc">&nbsp;            productService.updateProduct(existingProduct);</b>
+<b class="fc">&nbsp;            return new ResponseEntity&lt;&gt;(existingProduct, HttpStatus.OK);</b>
+&nbsp;        } else {
+<b class="fc">&nbsp;            return new ResponseEntity&lt;&gt;(HttpStatus.NOT_FOUND);</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;    @DeleteMapping(&quot;/products/{id}&quot;)
+&nbsp;    public ResponseEntity&lt;Void&gt; deleteProduct(@PathVariable Long id) {
+<b class="fc">&nbsp;        Product product = productService.getProductById(id);</b>
+<b class="fc">&nbsp;        if (product != null) {</b>
+<b class="fc">&nbsp;            productService.deleteProductById(id);</b>
+<b class="fc">&nbsp;            return new ResponseEntity&lt;&gt;(HttpStatus.NO_CONTENT);</b>
+&nbsp;        } else {
+<b class="fc">&nbsp;            return new ResponseEntity&lt;&gt;(HttpStatus.NOT_FOUND);</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-04-05 17:16</div>
+</div>
+</body>
+</html>

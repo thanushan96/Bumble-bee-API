@@ -1,0 +1,173 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > CustomerController</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">net.bumblebee.controller</a>
+</div>
+
+<h1>Coverage Summary for Class: CustomerController (net.bumblebee.controller)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">CustomerController</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (6/6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    87.5%
+  </span>
+  <span class="absValue">
+    (21/24)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package net.bumblebee.controller;
+&nbsp;
+&nbsp;import net.bumblebee.entity.Customer;
+&nbsp;import net.bumblebee.service.CustomerService;
+&nbsp;import org.springframework.http.ResponseEntity;
+&nbsp;import org.springframework.stereotype.Controller;
+&nbsp;import org.springframework.ui.Model;
+&nbsp;import org.springframework.web.bind.annotation.*;
+&nbsp;import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+&nbsp;
+&nbsp;import java.net.URI;
+&nbsp;import java.util.List;
+&nbsp;
+&nbsp;
+&nbsp;@RestController
+&nbsp;@CrossOrigin(&quot;http://localhost:3000&quot;)
+&nbsp;public class CustomerController {
+&nbsp;
+&nbsp;	private CustomerService customerService;
+&nbsp;
+&nbsp;	public CustomerController(CustomerService customerService) {
+<b class="fc">&nbsp;		super();</b>
+<b class="fc">&nbsp;		this.customerService = customerService;</b>
+&nbsp;	}
+&nbsp;
+&nbsp;	@GetMapping(&quot;/customers&quot;)
+&nbsp;	public ResponseEntity&lt;List&lt;Customer&gt;&gt; getAllCustomers() {
+<b class="fc">&nbsp;		List&lt;Customer&gt; customers = customerService.getAllCustomers();</b>
+<b class="fc">&nbsp;		return ResponseEntity.ok().body(customers);</b>
+&nbsp;	}
+&nbsp;
+&nbsp;	@GetMapping(&quot;/customers/{id}&quot;)
+&nbsp;	public ResponseEntity&lt;Customer&gt; getCustomerById(@PathVariable Long id) {
+<b class="fc">&nbsp;		Customer customer = customerService.getCustomerById(id);</b>
+<b class="fc">&nbsp;		if (customer == null) {</b>
+<b class="fc">&nbsp;			return ResponseEntity.notFound().build();</b>
+&nbsp;		}
+<b class="fc">&nbsp;		return ResponseEntity.ok().body(customer);</b>
+&nbsp;	}
+&nbsp;
+&nbsp;	@PostMapping(&quot;/customers/new&quot;)
+&nbsp;	public ResponseEntity&lt;Customer&gt; createCustomer(@RequestBody Customer customer) {
+<b class="fc">&nbsp;		customerService.saveCustomer(customer);</b>
+<b class="fc">&nbsp;		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path(&quot;/{id}&quot;)</b>
+<b class="nc">&nbsp;				.buildAndExpand(customer.getId()).toUri();</b>
+<b class="nc">&nbsp;		return ResponseEntity.created(location).body(customer);</b>
+&nbsp;	}
+&nbsp;
+&nbsp;	@PutMapping(&quot;/customers/{id}&quot;)
+&nbsp;	public ResponseEntity&lt;Customer&gt; updateCustomer(@PathVariable Long id, @RequestBody Customer customer) {
+<b class="fc">&nbsp;		Customer existingCustomer = customerService.getCustomerById(id);</b>
+<b class="fc">&nbsp;		if (existingCustomer == null) {</b>
+<b class="nc">&nbsp;			return ResponseEntity.notFound().build();</b>
+&nbsp;		}
+<b class="fc">&nbsp;		existingCustomer.setFirstName(customer.getFirstName());</b>
+<b class="fc">&nbsp;		existingCustomer.setLastName(customer.getLastName());</b>
+<b class="fc">&nbsp;		existingCustomer.setDateOfBirth(customer.getDateOfBirth());</b>
+<b class="fc">&nbsp;		existingCustomer.setEmail(customer.getEmail());</b>
+<b class="fc">&nbsp;		existingCustomer.setLoanAmount(customer.getLoanAmount());</b>
+<b class="fc">&nbsp;		customerService.updateCustomer(existingCustomer);</b>
+<b class="fc">&nbsp;		return ResponseEntity.ok().body(existingCustomer);</b>
+&nbsp;	}
+&nbsp;
+&nbsp;	@DeleteMapping(&quot;/customers/{id}&quot;)
+&nbsp;	public ResponseEntity&lt;Void&gt; deleteCustomer(@PathVariable Long id) {
+<b class="fc">&nbsp;		customerService.deleteCustomerById(id);</b>
+<b class="fc">&nbsp;		return ResponseEntity.noContent().build();</b>
+&nbsp;	}
+&nbsp;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-04-05 17:16</div>
+</div>
+</body>
+</html>
