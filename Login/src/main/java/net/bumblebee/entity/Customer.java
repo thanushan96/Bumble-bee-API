@@ -32,7 +32,10 @@ public class Customer {
     @Column(name = "loan_amount")
     private int loanAmount;
 
-    public Customer() {
+    public Customer(Long l, String john, String doe, LocalDate of, String s, double v) {
+
+    }
+    public Customer(){
 
     }
 

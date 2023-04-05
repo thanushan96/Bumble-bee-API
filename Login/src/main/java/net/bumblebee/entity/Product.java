@@ -29,7 +29,11 @@ public class Product {
     @Column(name = "price")
     private int price;
 
-    public Product() {
+    public Product(){
+
+    }
+
+    public Product(long l, String s, String s1, String s2, double v) {
 
     }
 
